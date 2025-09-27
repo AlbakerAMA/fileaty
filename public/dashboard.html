@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Fileaty</title>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Fileaty</div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard.html" class="active">Dashboard</a></li>
+                <li id="user-menu">
+                    <a href="#" id="user-profile">Profile</a>
+                    <ul class="dropdown">
+                        <li><a href="#" id="logout-link">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <h3>File Management</h3>
+                <ul>
+                    <li><a href="#" class="active">All Files</a></li>
+                    <li><a href="#">Shared with Me</a></li>
+                    <li><a href="#">Recent</a></li>
+                    <li><a href="#">Trash</a></li>
+                </ul>
+                
+                <div class="upload-section">
+                    <button id="upload-btn" class="btn primary">Upload File</button>
+                    <input type="file" id="file-input" style="display: none;">
+                </div>
+            </aside>
+
+            <div class="main-content">
+                <div class="top-bar">
+                    <h2>My Files</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search files...">
+                        <button class="btn">Search</button>
+                    </div>
+                </div>
+
+                <div class="file-list-container">
+                    <table class="file-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Size</th>
+                                <th>Uploaded By</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="file-list">
+                            <!-- File rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="file-preview" id="file-preview" style="display: none;">
+                    <h3>File Details</h3>
+                    <div id="preview-content">
+                        <!-- File preview content will be populated by JavaScript -->
+                    </div>
+                    <div class="comments-section">
+                        <h4>Comments</h4>
+                        <div id="comments-list">
+                            <!-- Comments will be populated by JavaScript -->
+                        </div>
+                        <div class="add-comment">
+                            <textarea id="comment-text" placeholder="Add a comment..."></textarea>
+                            <button id="add-comment-btn" class="btn">Add Comment</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Fileaty. All rights reserved.</p>
+    </footer>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
