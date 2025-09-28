@@ -1,7 +1,9 @@
 const AWS = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
-require('dotenv').config();
+const path = require('path');
+// Load .env file from outside the project directory
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 // Configure AWS
 const s3 = new AWS.S3({

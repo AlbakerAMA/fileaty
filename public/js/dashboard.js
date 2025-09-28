@@ -47,7 +47,7 @@ fileInput?.addEventListener('change', async function(e) {
     formData.append('file', file);
     
     try {
-        const response = await fetch('/api/files/upload', {
+        const response = await fetch(`${window.API_CONFIG.BASE_URL}/api/files/upload`, {
             method: 'POST',
             headers: {
                 'Authorization': token
@@ -80,7 +80,7 @@ addCommentBtn?.addEventListener('click', async function() {
     }
     
     try {
-        const response = await fetch(`/api/comments/file/${currentFileId}`, {
+        const response = await fetch(`${window.API_CONFIG.BASE_URL}/api/comments/file/${currentFileId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', loadFiles);
 // Load all files
 async function loadFiles() {
     try {
-        const response = await fetch('/api/files', {
+        const response = await fetch(`${window.API_CONFIG.BASE_URL}/api/files`, {
             headers: {
                 'Authorization': token
             }
@@ -157,7 +157,7 @@ function renderFileList(files) {
 // Preview file
 async function previewFile(fileId) {
     try {
-        const response = await fetch(`/api/files/${fileId}`, {
+        const response = await fetch(`${window.API_CONFIG.BASE_URL}/api/files/${fileId}`, {
             headers: {
                 'Authorization': token
             }
@@ -192,7 +192,7 @@ async function previewFile(fileId) {
 // Load comments for a file
 async function loadComments(fileId) {
     try {
-        const response = await fetch(`/api/comments/file/${fileId}`, {
+        const response = await fetch(`${window.API_CONFIG.BASE_URL}/api/comments/file/${fileId}`, {
             headers: {
                 'Authorization': token
             }
@@ -234,7 +234,7 @@ function renderComments(comments, fileId) {
 
 // Download file
 function downloadFile(fileId) {
-    window.open(`/api/files/${fileId}/download`, '_blank');
+    window.open(`${window.API_CONFIG.BASE_URL}/api/files/${fileId}/download`, '_blank');
 }
 
 // Delete file
@@ -244,7 +244,7 @@ async function deleteFile(fileId) {
     }
     
     try {
-        const response = await fetch(`/api/files/${fileId}`, {
+        const response = await fetch(`${window.API_CONFIG.BASE_URL}/api/files/${fileId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': token
@@ -274,7 +274,7 @@ async function deleteComment(commentId, fileId) {
     }
     
     try {
-        const response = await fetch(`/api/comments/${commentId}`, {
+        const response = await fetch(`${window.API_CONFIG.BASE_URL}/api/comments/${commentId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': token

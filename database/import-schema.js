@@ -3,7 +3,8 @@
 const mysql = require('mysql2');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
+// Load .env file from outside the project directory
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 // Database connection configuration
 const config = {

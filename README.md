@@ -56,6 +56,7 @@ fileaty/
 │   ├── styles/
 │   │   └── main.css          # Main stylesheet
 │   └── js/
+│       ├── config.js         # API configuration
 │       ├── main.js           # Main JavaScript
 │       ├── auth.js           # Authentication JavaScript
 │       └── dashboard.js      # Dashboard JavaScript
@@ -112,6 +113,38 @@ For detailed setup instructions, please refer to [SETUP.md](SETUP.md).
    ```
    npm run dev
    ```
+
+## Deployment Instructions
+
+### Deploying to Vercel (Recommended)
+
+For Vercel deployment, please refer to [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md).
+
+### Deploying to Render (Alternative)
+
+When deploying to a production environment where the frontend and backend are hosted on different domains (e.g., frontend on Netlify/Vercel and backend on Render), you need to make the following changes:
+
+### 1. Configure API Base URL
+
+Update the [public/js/config.js](file:///C:/Users/ss/Desktop/project/pro/Fileaty/public/js/config.js) file with your backend URL:
+
+```javascript
+// Replace 'YOUR_RENDER_URL' with your actual Render backend URL
+// Example: const API_BASE_URL = 'https://my-fileaty-app.onrender.com';
+const API_BASE_URL = 'YOUR_RENDER_URL';
+
+window.API_CONFIG = {
+    BASE_URL: API_BASE_URL
+};
+```
+
+### 2. Environment Variables Location
+
+When deploying, place your `.env` file outside the public directory (one level above the project directory) for security.
+
+### 3. CORS Configuration
+
+The application already includes CORS middleware in [server.js](file:///C:/Users/ss/Desktop/project/pro/Fileaty/server.js), which should handle cross-origin requests from your frontend domain.
 
 ## Database Schema
 

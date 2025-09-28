@@ -9,5 +9,12 @@ module.exports = {
     min: 0,
     acquire: 30000,
     idle: 10000
-  }
+  },
+  // Add configuration for Vercel/Serverless environments
+  dialectOptions: {
+    // Needed for Vercel/Serverless environments
+    connectTimeout: 60000
+  },
+  // Ensure connections are properly closed in serverless environments
+  keepDefaultTimezone: true
 };

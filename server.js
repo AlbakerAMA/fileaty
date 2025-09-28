@@ -1,7 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
+// Load .env file from outside the public directory
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,14 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Database
 const db = require("./models");
-const { User, File, Comment } = db;
-
-// Sync database
-db.sequelize.sync().then(() => {
-  console.log("Database synced successfully.");
-}).catch((err) => {
-  console.log("Failed to sync database: " + err.message);
-});
 
 // Routes
 app.get('/', (req, res) => {
@@ -39,12 +32,42 @@ app.use('/api/files', require('./routes/file.routes'));
 // Comment routes
 app.use('/api/comments', require('./routes/comment.routes'));
 
-// Export app for testing
+// Health check endpoint for Vercel
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'OK', message: 'Fileaty backend is running' });
+});
+
+// Export app for Vercel serverless functions
 module.exports = app;
 
-// Start server only if this file is run directly
-if (require.main === module) {
-  app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-}
+// Enhanced error handling for Vercel serverless deployment
+const serverlessHandler = async (req, res) => {
+  try {
+    // Test database connection with timeout
+    await Promise.race([
+      db.sequelize.authenticate(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Database connection timeout')), 5000)
+      )
+    ]);
+    console.log('Database connection successful');
+    
+    // Handle the request with the app
+    return app(req, res);
+  } catch (error) {
+    console.error('Application Error:', {
+      message: error.message,
+      stack: error.stack,
+      code: error.code
+    });
+    
+    // Send detailed error response
+    return res.status(500).json({ 
+      status: 'ERROR', 
+      message: 'Application initialization failed',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
+  }
+};
+
+module.exports.handler = serverlessHandler;
